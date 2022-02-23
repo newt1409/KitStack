@@ -49,8 +49,3 @@ find $OUTPUT_DIR -type f -exec chmod 655 -- {} +
 printf "=====================================================\n"
 printf "SSL Certifications generation completed successfully.\n"
 printf "=====================================================\n"
-
-#echo "Waiting for Elasticsearch availability";
-#until curl -s --cacert ca.crt https://es01:9200 | grep -q "missing authentication credentials"; do sleep 30; done;
-#echo "Setting kibana_system password";
-#until curl -s -X POST --cacert $OUTPUT_DIR/kibana/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01:9200/_security/user/kibana_system/_password -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | grep -q "^{}"; do sleep 10; done;
