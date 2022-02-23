@@ -1,0 +1,11 @@
+server.name: washbucket
+server.host: "0.0.0.0"
+elasticsearch.hosts: [ "https://10.0.0.198:9200" ]
+elasticsearch.username: kibana_system
+elasticsearch.password: password
+monitoring.ui.container.elasticsearch.enabled: true
+xpack.encryptedSavedObjects.encryptionKey: 'fhjskloppd678ehkdfdlliverpoolfcr'
+elasticsearch.ssl.certificateAuthorities: [ "/usr/share/kibana/config/certificates/elasticsearch-ca.pem" ]
+server.ssl.certificate: "/usr/share/kibana/config/certificates/kibana-server.crt"
+server.ssl.key: "/usr/share/kibana/config/certificates/kibana-server.key"
+server.ssl.enabled: true

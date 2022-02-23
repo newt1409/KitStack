@@ -1,0 +1,74 @@
+version: '3.5'
+
+services:
+  elasticsearch:
+    container_name: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VER}
+    network_mode: host
+    hostname: 'elasticsearch'
+    environment:
+    - "node.name=elasticsearch"
+    - "cluster.name=washbucket"
+    - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    - "discovery.seed_hosts=elasticsearch1,elasticsearch2"
+    - "cluster.initial_master_nodes=elasticsearch,elasticsearch1,elasticsearch2"
+    cap_add:
+    - IPC_LOCK
+    privileged: true
+    volumes:
+    - "./data:/usr/share/elasticsearch/data"
+    - "./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml"
+    - "./secrets/certs/elasticsearch/:/usr/share/elasticsearch/config/certificates/"
+    - "./secrets/keystore/elasticsearch.keystore:/usr/share/elasticsearch/config/elasticsearch.keystore"
+
+  elasticsearch1:
+    container_name: elasticsearch1
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VER}
+    network_mode: host
+    hostname: 'elasticsearch1'
+    environment:
+    - "node.name=elasticsearch1"
+    - "cluster.name=washbucket"
+    - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    - "discovery.seed_hosts=elasticsearch,elasticsearch2"
+    - "cluster.initial_master_nodes=elasticsearch,elasticsearch1,elasticsearch2"
+    cap_add:
+    - IPC_LOCK
+    privileged: true
+    volumes:
+    - "./data1:/usr/share/elasticsearch/data"
+    - "./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml"
+    - "./secrets/certs/elasticsearch/:/usr/share/elasticsearch/config/certificates/"
+    - "./secrets/keystore/elasticsearch.keystore:/usr/share/elasticsearch/config/elasticsearch.keystore"
+
+  elasticsearch2:
+    container_name: elasticsearch2
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VER}
+    network_mode: host
+    hostname: 'elasticsearch2'
+    environment:
+    - "node.name=elasticsearch2"
+    - "cluster.name=washbucket"
+    - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    - "discovery.seed_hosts=elasticsearch,elasticsearch1"
+    - "cluster.initial_master_nodes=elasticsearch,elasticsearch1,elasticsearch2"
+    cap_add:
+    - IPC_LOCK
+    privileged: true
+    volumes:
+    - "./data2:/usr/share/elasticsearch/data"
+    - "./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml"
+    - "./secrets/certs/elasticsearch/:/usr/share/elasticsearch/config/certificates/"
+    - "./secrets/keystore/elasticsearch.keystore:/usr/share/elasticsearch/config/elasticsearch.keystore"
+    
+  kibana:
+    restart: always
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:${ELASTIC_VER}
+    network_mode: host
+    volumes:
+    - "./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml"
+    - "./secrets/certs/kibana/elasticsearch-ca.pem:/usr/share/kibana/config/certificates/elasticsearch-ca.pem"
+    - "./secrets/certs/kibana/kibana.crt:/usr/share/kibana/config/certificates/kibana-server.crt"
+    - "./secrets/certs/kibana/kibana.key:/usr/share/kibana/config/certificates/kibana-server.key"
+
