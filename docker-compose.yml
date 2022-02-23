@@ -201,10 +201,10 @@ services:
     volumes:
       - ./secrets/certs:/usr/share/elasticsearch/config/certs
       - ./setup:/setup
+      - ./.env:/setup/.env:rw
     user: "0"
     environment:
       ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
-      FLEET_TOKEN: ${FLEET_TOKEN}
     command: bash /setup/fleet_token.sh
     healthcheck:
       test: exit 0
@@ -224,6 +224,7 @@ services:
       - "FLEET_SERVER_INSECURE_HTTP=0"
       - "FLEET_INSECURE=1"
       - "FLEET_ENROLL=1"
+      #- "FLEET_SERVER_SERVICE_TOKEN=AAEAAWVsYXN0aWMvZmxlZXQtc2VydmVyL3Rva2VuLTE2NDU2NTIxNTE2NTI6SWx6eFhBeXpRQktYenpheTJYSzduQQ"
       - "FLEET_SERVER_CERT=/usr/share/elastic-agent/cert.crt"
       - "FLEET_SERVER_CERT_KEY=/usr/share/elastic-agent/cert.key"
       - "FLEET_URL=https://${ES_HOST}:8220"
