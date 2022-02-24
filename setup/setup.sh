@@ -7,6 +7,18 @@ printf "\033c"
 printf "======= Generating Elastic Stack Certificates =======\n"
 printf "=====================================================\n"
 
+if [ ! -d "/startup/esdata" ]; then
+    echo "Creating folders for elastic data..."
+    mkdir -p /startup/esdata/{esdata01,esdata02,esdata03}
+    chmod -R 775 esdata
+fi
+if [ -f "$OUTPUT_DIR/ca/ca.crt" ]; then
+    echo "Certs Exist skipping..."
+    exit 0
+    else
+    echo "Starting Certificate Creation"
+fi
+
 printf "Clearing Old Certificates if exits... \n"
 find $OUTPUT_DIR -mindepth 1 -exec rm -rf -- {} +
 

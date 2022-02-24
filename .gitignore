@@ -1,4 +1,3 @@
 secrets/*
-esdata01/*
-esdata02/*
-esdata03/*
+esdata*
+setup/fleet.token

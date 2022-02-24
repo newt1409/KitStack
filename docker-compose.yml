@@ -6,6 +6,7 @@ services:
     volumes:
       - ./secrets/certs:/usr/share/elasticsearch/config/certs
       - ./setup:/setup
+      - ./:/startup
     user: "0"
     environment:
       ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
@@ -42,11 +43,11 @@ services:
   es01:
     depends_on:
       certs:
-        condition: service_healthy
+        condition: service_started
     image: docker.elastic.co/elasticsearch/elasticsearch:${ES_VERSION}
     volumes:
       - ./secrets/certs:/usr/share/elasticsearch/config/certs
-      - ./esdata01:/usr/share/elasticsearch/data
+      - ./esdata/esdata01:/usr/share/elasticsearch/data
     ports:
       - ${ES_PORT}:9200
     environment:
@@ -89,7 +90,7 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:${ES_VERSION}
     volumes:
       - ./secrets/certs:/usr/share/elasticsearch/config/certs
-      - ./esdata02:/usr/share/elasticsearch/data
+      - ./esdata/esdata02:/usr/share/elasticsearch/data
     environment:
       - node.name=es02
       - cluster.name=${CLUSTER_NAME}
@@ -129,7 +130,7 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:${ES_VERSION}
     volumes:
       - ./secrets/certs:/usr/share/elasticsearch/config/certs
-      - ./esdata03:/usr/share/elasticsearch/data
+      - ./esdata/esdata03:/usr/share/elasticsearch/data
     environment:
       - node.name=es03
       - cluster.name=${CLUSTER_NAME}
@@ -201,7 +202,6 @@ services:
     volumes:
       - ./secrets/certs:/usr/share/elasticsearch/config/certs
       - ./setup:/setup
-      - ./.env:/setup/.env:rw
     user: "0"
     environment:
       ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
