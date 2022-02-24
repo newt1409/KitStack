@@ -193,38 +193,39 @@ services:
       interval: 10s
       timeout: 10s
       retries: 120
-
-  fleet_token:
-    depends_on:
-      kibana:
-        condition: service_healthy
-    image: docker.elastic.co/elasticsearch/elasticsearch:${ES_VERSION}
-    volumes:
-      - ./secrets/certs:/usr/share/elasticsearch/config/certs
-      - ./setup:/setup
-    user: "0"
-    environment:
-      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
-    command: bash /setup/fleet_token.sh
-    healthcheck:
-      test: exit 0
-      interval: 1s
-      timeout: 5s
-      retries: 120
+# currently can not get the Fleet server to talk to Kibana, the token is created but kibana "isnt prepared" 
+#   to connect as it hasnt been setup with the gui, so adding it is the only way, currently
+#  fleet_token:
+#    depends_on:
+#      kibana:
+#        condition: service_healthy
+#    image: docker.elastic.co/elasticsearch/elasticsearch:${ES_VERSION}
+#    volumes:
+#      - ./secrets/certs:/usr/share/elasticsearch/config/certs
+#      - ./setup:/setup
+#    user: "0"
+#    environment:
+#      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
+#    command: bash /setup/fleet_token.sh
+#    healthcheck:
+#      test: exit 0
+#      interval: 1s
+#      timeout: 5s
+#      retries: 120
 
   fleet_server:
     image: docker.elastic.co/beats/elastic-agent:8.0.0
     depends_on:
       fleet_token:
         condition: service_started
-    env_file:
-      - ./setup/fleet.token
+#    env_file:
+#      - ./setup/fleet.token
     environment:
       - "FLEET_SERVER_ENABLE=1"
       - "FLEET_SERVER_INSECURE_HTTP=0"
       - "FLEET_INSECURE=1"
       - "FLEET_ENROLL=1"
-      #- "FLEET_SERVER_SERVICE_TOKEN=AAEAAWVsYXN0aWMvZmxlZXQtc2VydmVyL3Rva2VuLTE2NDU2NTIxNTE2NTI6SWx6eFhBeXpRQktYenpheTJYSzduQQ"
+      - "FLEET_SERVER_SERVICE_TOKEN=AAEAAWVsYXN0aWMvZmxlZXQtc2VydmVyL3Rva2VuLTE2NDU3MjEzNzQ3OTA6VGw5RkcydnFUR2llOW9heWUxeVRGdw"
       - "FLEET_SERVER_CERT=/usr/share/elastic-agent/cert.crt"
       - "FLEET_SERVER_CERT_KEY=/usr/share/elastic-agent/cert.key"
       - "FLEET_URL=https://${ES_HOST}:8220"
