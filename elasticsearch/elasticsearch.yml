@@ -13,6 +13,7 @@ indices.recovery.max_bytes_per_sec: "400mb"
 
 # Elastic Basic Security Settings
 xpack.security.enabled: true
+xpack.security.authc.api_key.enabled: true
 xpack.security.transport.ssl.enabled: true
 xpack.security.transport.ssl.verification_mode: certificate 
 xpack.security.transport.ssl.keystore.path: /usr/share/elasticsearch/config/certificates/elastic-certificates.p12 

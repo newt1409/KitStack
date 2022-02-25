@@ -168,10 +168,8 @@ services:
     depends_on:
       es01:
         condition: service_healthy
-      es02:
-        condition: service_healthy
-      es03:
-        condition: service_healthy
+      setup:
+        condition: service_started
     image: docker.elastic.co/kibana/kibana:${ES_VERSION}
     volumes:
       - ./secrets/certs:/usr/share/kibana/config/certs
@@ -214,10 +212,12 @@ services:
       retries: 120
 
   fleet_server:
-    image: docker.elastic.co/beats/elastic-agent:8.0.0
+    image: docker.elastic.co/beats/elastic-agent:${ES_VERSION}
     depends_on:
       fleet_token:
         condition: service_started
+      kibana:
+        condition: service_healthy
     env_file:
       - ./setup/fleet.token
     environment:
@@ -250,4 +250,4 @@ services:
     volumes:
       - ./secrets/certs/fleet/fleet.crt:/usr/share/elastic-agent/cert.crt:ro
       - ./secrets/certs/fleet/fleet.key:/usr/share/elastic-agent/cert.key:ro
-      - ./secrets/certs/kibana/elasticsearch-ca.pem:/usr/share/elastic-agent/ca.pem:ro      
+      - ./secrets/certs/kibana/elasticsearch-ca.pem:/usr/share/elastic-agent/ca.pem:ro 
