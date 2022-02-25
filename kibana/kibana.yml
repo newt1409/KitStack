@@ -1,6 +1,6 @@
 server.name: washbucket
 server.host: "0.0.0.0"
-elasticsearch.hosts: [ "https://10.0.0.198:9200" ]
+elasticsearch.hosts: [ "https://${ES_HOST}:9200" ]
 elasticsearch.username: kibana_system
 elasticsearch.password: password
 monitoring.ui.container.elasticsearch.enabled: true

@@ -10,7 +10,7 @@ printf "=====================================================\n"
 if [ ! -d "/startup/esdata" ]; then
     echo "Creating folders for elastic data..."
     mkdir -p /startup/esdata/{esdata01,esdata02,esdata03}
-    chmod -R 775 esdata
+    chmod -R 775 /startup/esdata
 fi
 if [ -f "$OUTPUT_DIR/ca/ca.crt" ]; then
     echo "Certs Exist skipping..."
