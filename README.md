@@ -2,7 +2,7 @@ Make sure to change the settings in the .env file, but definetly change ES_HOST 
 
       ES_HOST=<IP>
 
-Everything is dockerized and creates the fleet token automatically
+Everything is dockerized and creates the fleet token automagically
 
       docker-compose up -d
  
