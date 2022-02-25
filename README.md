@@ -2,6 +2,7 @@ Make sure to change the settings in the .env file, but definetly change ES_HOST 
 
       ES_HOST=<IP>
 
-Everything is dockerized and creates the fleet token automatically
+Everything is dockerized and creates the fleet token automatically, HOWEVER it needs kibana to be restarted to incorperate Fleet setup
 
       docker-compose up -d   
+
