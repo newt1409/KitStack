@@ -28,6 +28,9 @@ if [ -z $ELASTIC_PASSWORD ]; then
 elif [ -z $KIBANA_PASSWORD ]; then
     echo "Set the KIBANA_PASSWORD environment variable in the .env file"
     exit 1;
+elif [ -z $ES_HOST ]; then
+    echo "Set the ES_HOST environment variable in the .env file"
+    exit 1;
 fi
 
 echo "Elastic password is: $ELASTIC_PASSWORD"

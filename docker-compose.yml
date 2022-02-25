@@ -11,7 +11,8 @@ services:
     environment:
       ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
       KIBANA_PASSWORD: ${KIBANA_PASSWORD}
-    command: bash /setup/setup.sh
+      ES_HOST: ${ES_HOST}
+    command: bash /setup/certs.sh
     healthcheck:
       test: exit 0
       interval: 1s
