@@ -1,0 +1,21 @@
+version: "2.2"
+
+services:
+  certs:
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ES_VERSION}
+    volumes:
+      - ./secrets/certs:/usr/share/elasticsearch/config/certs
+      - ./setup:/setup
+      - ./:/startup
+    user: "0"
+    environment:
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
+      KIBANA_PASSWORD: ${KIBANA_PASSWORD}
+      ES_HOST: ${ES_HOST}
+      CERT_DOMIN: ${CERT_DOMAIN}
+    command: bash /setup/certs.sh
+    healthcheck:
+      test: "exit 0"
+      interval: 1s
+      timeout: 5s
+      retries: 120

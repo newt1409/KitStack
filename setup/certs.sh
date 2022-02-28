@@ -41,7 +41,8 @@ bin/elasticsearch-certutil ca --silent --pem -out config/certs/ca.zip;
 unzip config/certs/ca.zip -d config/certs
 
 echo "Generating HTTP Certificates... \n"
-elasticsearch-certutil http <<<$'n\ny\n/usr/share/elasticsearch/config/certs/ca/ca.crt\n/usr/share/elasticsearch/config/certs/ca/ca.key\n\n5y\nn\n*.windomain.local\nlocalhost\nkibana\nfleet\n\ny\n10.0.0.198\n127.0.0.1\n\ny\nn\n\n';
+printf "n\ny\n/usr/share/elasticsearch/config/certs/ca/ca.crt\n/usr/share/elasticsearch/config/certs/ca/ca.key\n\n5y\nn\n${CERT_DOMAIN}\nlocalhost\nkibana\nfleet\n\ny\n${ES_HOST}\n127.0.0.1\n\ny\nn\n\n\n" | elasticsearch-certutil http
+#elasticsearch-certutil http <<<$'n\ny\n/usr/share/elasticsearch/config/certs/ca/ca.crt\n/usr/share/elasticsearch/config/certs/ca/ca.key\n\n5y\nn\n*.windomain.local\nlocalhost\nkibana\nfleet\n\ny\n10.0.0.198\n127.0.0.1\n\ny\nn\n\n';
 unzip elasticsearch-ssl-http.zip -d config/certs
 mv elasticsearch-ssl-http.zip config/certs/.
 
