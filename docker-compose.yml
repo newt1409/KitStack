@@ -12,6 +12,7 @@ services:
       ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
       KIBANA_PASSWORD: ${KIBANA_PASSWORD}
       ES_HOST: ${ES_HOST}
+      CERT_DOMAIN: ${CERT_DOMAIN}
     command: bash /setup/certs.sh
     healthcheck:
       test: "exit 0"
