@@ -7,6 +7,9 @@ printf "\033c"
 printf "======= Generating Elastic Stack Certificates =======\n"
 printf "=====================================================\n"
 
+#health check bandaid for fleet_token
+rm -f setup/fleet.token
+
 if [ ! -d "/startup/esdata" ]; then
     echo "Creating folders for elastic data..."
     mkdir -p /startup/esdata/{esdata01,esdata02,esdata03}
@@ -14,6 +17,8 @@ if [ ! -d "/startup/esdata" ]; then
 fi
 if [ -f "$OUTPUT_DIR/ca/ca.crt" ]; then
     echo "Certs Exist skipping..."
+    #give time for healthcheck to update
+    sleep 10
     exit 0
     else
     echo "Starting Certificate Creation"
@@ -55,3 +60,6 @@ chown -R root:root config/certs
 find $OUTPUT_DIR -type d -exec chmod -R 750 {} +
 find $OUTPUT_DIR -type f -exec chmod -R 640 {} +
 echo "All done!"
+
+#give time for healthcheck to update
+sleep 10

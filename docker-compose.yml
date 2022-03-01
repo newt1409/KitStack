@@ -15,37 +15,15 @@ services:
       CERT_DOMAIN: ${CERT_DOMAIN}
     command: bash /setup/certs.sh
     healthcheck:
-      test: "exit 0"
+      test: ["CMD-SHELL", "[ -f config/certs/es01/es01.crt ]"]
       interval: 1s
-      timeout: 5s
-      retries: 120
-
-  setup:
-    depends_on:
-      es01:
-        condition: service_healthy
-    image: docker.elastic.co/elasticsearch/elasticsearch:${ES_VERSION}
-    volumes:
-      - ./secrets/certs:/usr/share/elasticsearch/config/certs
-    user: "0"
-    command: >
-      bash -c '
-        echo "Waiting for Elasticsearch availability";
-        until curl -s --cacert config/certs/ca/ca.crt https://es01:9200 | grep -q "missing authentication credentials"; do sleep 30; done;
-        echo "Setting kibana_system password";
-        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01:9200/_security/user/kibana_system/_password -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | grep -q "^{}"; do sleep 10; done;    
-        echo "Setup Finished"
-      '
-    healthcheck:
-      test: "exit 0"
-      interval: 1s
-      timeout: 5s
+      timeout: 2s
       retries: 120
 
   es01:
     depends_on:
       certs:
-        condition: service_started
+        condition: service_healthy
     image: docker.elastic.co/elasticsearch/elasticsearch:${ES_VERSION}
     volumes:
       - ./secrets/certs:/usr/share/elasticsearch/config/certs
@@ -166,12 +144,36 @@ services:
       timeout: 10s
       retries: 120
 
+  setup:
+    depends_on:
+      es01:
+        condition: service_healthy
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ES_VERSION}
+    volumes:
+      - ./secrets/certs:/usr/share/elasticsearch/config/certs
+    user: "0"
+    command: >
+      bash -c '
+        echo "Waiting for Elasticsearch availability";
+        until curl -s --cacert config/certs/ca/ca.crt https://es01:9200 | grep -q "missing authentication credentials"; do sleep 30; done;
+        echo "Setting kibana_system password";
+        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01:9200/_security/user/kibana_system/_password -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | grep -q "^{}"; do sleep 10; done;    
+        echo "Setup Finished"
+        sleep 15
+      '
+    healthcheck:
+      test: "exit 0"
+      start_period: 5s
+      interval: 1s
+      timeout: 5s
+      retries: 120
+
   kibana:
     depends_on:
       es01:
         condition: service_healthy
       setup:
-        condition: service_started
+        condition: service_healthy
     image: docker.elastic.co/kibana/kibana:${ES_VERSION}
     volumes:
       - ./secrets/certs:/usr/share/kibana/config/certs
@@ -208,9 +210,9 @@ services:
       ES_HOST: ${ES_HOST}
     command: bash /setup/fleet_token.sh
     healthcheck:
-      test: "exit 0"
+      test: ["CMD-SHELL", "[ -f /setup/fleet.token ]"]
       interval: 1s
-      timeout: 5s
+      timeout: 2s
       retries: 120
 
   fleet_server:
