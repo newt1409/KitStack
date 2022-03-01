@@ -198,6 +198,8 @@ services:
   fleet_token:
     depends_on:
       setup:
+        condition: service_healthy    
+      kibana:
         condition: service_healthy
     image: docker.elastic.co/elasticsearch/elasticsearch:${ES_VERSION}
     volumes:
