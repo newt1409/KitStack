@@ -8,7 +8,7 @@ printf "======= Generating Elastic Stack Certificates =======\n"
 printf "=====================================================\n"
 
 #health check bandaid for fleet_token
-rm -f setup/fleet.token
+rm -f /setup/fleet.token
 
 if [ ! -d "/startup/esdata" ]; then
     echo "Creating folders for elastic data..."
