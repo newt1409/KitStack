@@ -1,6 +1,3 @@
-#wait for kibana to actually finish, not just show healthy to docker
-sleep 30
-
 echo "Preparing Kibana for Fleet Server Integration"
 until curl -s --cacert config/certs/ca/ca.crt -u "elastic:${ELASTIC_PASSWORD}" -X POST "http://${ES_HOST}:5601/api/fleet/setup" --header 'kbn-xsrf: true' | grep -q "nonFatalErrors"; do sleep 15; done;
 echo "Kibana Ready"
@@ -12,5 +9,5 @@ token=$(curl --insecure -s --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_
 echo "FLEET_SERVER_SERVICE_TOKEN=$token" > /setup/fleet.token
 echo "Fleet Service Token created"
 
-#give time for healthcheck to update
+#give time for healthcheck to update, just incase
 sleep 10
