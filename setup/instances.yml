@@ -29,4 +29,17 @@ instances:
       - localhost
     ip:
       - 127.0.0.1
+  - name: filebeat
+    dns:
+      - filebeat
+      - localhost
+    ip:
+      - 127.0.0.1
+  - name: arkime
+    dns:
+      - arkime
+      - localhost
+    ip:
+      - 127.0.0.1
+
 

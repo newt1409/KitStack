@@ -3,6 +3,7 @@ version: "2.2"
 services:
   certs:
     image: docker.elastic.co/elasticsearch/elasticsearch:${ES_VERSION}
+    container_name: certs
     volumes:
       - ./secrets/certs:/usr/share/elasticsearch/config/certs
       - ./setup:/setup
@@ -25,6 +26,7 @@ services:
       certs:
         condition: service_healthy
     image: docker.elastic.co/elasticsearch/elasticsearch:${ES_VERSION}
+    container_name: es01
     volumes:
       - ./secrets/certs:/usr/share/elasticsearch/config/certs
       - ./esdata/esdata01:/usr/share/elasticsearch/data
@@ -68,6 +70,7 @@ services:
     depends_on:
       - es01
     image: docker.elastic.co/elasticsearch/elasticsearch:${ES_VERSION}
+    container_name: es02
     volumes:
       - ./secrets/certs:/usr/share/elasticsearch/config/certs
       - ./esdata/esdata02:/usr/share/elasticsearch/data
@@ -108,6 +111,7 @@ services:
     depends_on:
       - es02
     image: docker.elastic.co/elasticsearch/elasticsearch:${ES_VERSION}
+    container_name: es03
     volumes:
       - ./secrets/certs:/usr/share/elasticsearch/config/certs
       - ./esdata/esdata03:/usr/share/elasticsearch/data
@@ -149,6 +153,7 @@ services:
       es01:
         condition: service_healthy
     image: docker.elastic.co/elasticsearch/elasticsearch:${ES_VERSION}
+    container_name: setup
     volumes:
       - ./secrets/certs:/usr/share/elasticsearch/config/certs
     user: "0"
@@ -174,6 +179,7 @@ services:
       setup:
         condition: service_healthy
     image: docker.elastic.co/kibana/kibana:${ES_VERSION}
+    container_name: kibana
     volumes:
       - ./secrets/certs:/usr/share/kibana/config/certs
     ports:
@@ -200,6 +206,7 @@ services:
       kibana:
         condition: service_healthy
     image: docker.elastic.co/elasticsearch/elasticsearch:${ES_VERSION}
+    container_name: fleet_token
     volumes:
       - ./secrets/certs:/usr/share/elasticsearch/config/certs
       - ./setup:/setup
@@ -216,6 +223,7 @@ services:
 
   fleet_server:
     image: docker.elastic.co/beats/elastic-agent:${ES_VERSION}
+    container_name: fleet_server
     depends_on:
       fleet_token:
         condition: service_healthy
@@ -232,18 +240,6 @@ services:
       - "FLEET_CA=/usr/share/elastic-agent/ca.pem"
       - "FLEET_SERVER_CERT=/usr/share/elastic-agent/cert.crt"
       - "FLEET_SERVER_CERT_KEY=/usr/share/elastic-agent/cert.key"
-      
-
-      #- "FLEET_SERVER_INSECURE_HTTP=0"
-      #- "FLEET_INSECURE=1"
-      #- "FLEET_ENROLL=1"
-      #- "KIBANA_FLEET_CA=/usr/share/elastic-agent/ca.pem"
-      #- "ELASTICSEARCH_CA=/usr/share/elastic-agent/ca.pem"
-      #- "KIBANA_CA=/usr/share/elastic-agent/ca.pem"
-      
-      
-      
-      
     ports:
       - "8220:8220"
     healthcheck:
@@ -254,3 +250,19 @@ services:
       - ./secrets/certs/fleet/fleet.crt:/usr/share/elastic-agent/cert.crt:ro
       - ./secrets/certs/fleet/fleet.key:/usr/share/elastic-agent/cert.key:ro
       - ./secrets/certs/kibana/elasticsearch-ca.pem:/usr/share/elastic-agent/ca.pem:ro 
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:$ES_VERSION
+    restart: always
+    container_name: filebeat
+    depends_on:
+        - kibana
+    environment:
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
+      ES_HOST: ${ES_HOST}
+    volumes:
+        - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+        - /opt/zeek/spool/manager/:/pcap:ro
+        - ../Arkime/suricata/logs:/suricata:ro
+        - ./secrets/certs:/usr/share/filebeat/config/certs
+    command: -e
