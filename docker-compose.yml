@@ -234,12 +234,18 @@ services:
     environment:
       - "FLEET_SERVER_ENABLE=true"
       - "FLEET_SERVER_ELASTICSEARCH_HOST=https://${ES_HOST}:9200"
-      - "FLEET_SERVER_ELASTICSEARCH_CA=/usr/share/elastic-agent/ca.pem"
       #- "FLEET_SERVER_SERVICE_TOKEN=AAEAAWVsYXN0aWMvZmxlZXQtc2VydmVyL3Rva2VuLTE2NDU3MjEzNzQ3OTA6VGw5RkcydnFUR2llOW9heWUxeVRGdw"
       - "FLEET_URL=https://${ES_HOST}:8220"
-      - "FLEET_CA=/usr/share/elastic-agent/ca.pem"
+      
+      - "FLEET_SERVER_INSECURE_HTTP=0"
+      - "FLEET_INSECURE=1"
       - "FLEET_SERVER_CERT=/usr/share/elastic-agent/cert.crt"
       - "FLEET_SERVER_CERT_KEY=/usr/share/elastic-agent/cert.key"
+      - "FLEET_SERVER_ELASTICSEARCH_CA=/usr/share/elastic-agent/ca.pem"
+      - "KIBANA_FLEET_CA=/usr/share/elastic-agent/ca.pem"
+      - "FLEET_CA=/usr/share/elastic-agent/ca.pem"
+      - "ELASTICSEARCH_CA=/usr/share/elastic-agent/ca.pem"
+      - "KIBANA_CA=/usr/share/elastic-agent/ca.pem"
     ports:
       - "8220:8220"
     healthcheck:

@@ -51,6 +51,60 @@ printf "n\ny\n/usr/share/elasticsearch/config/certs/ca/ca.crt\n/usr/share/elasti
 unzip elasticsearch-ssl-http.zip -d config/certs
 mv elasticsearch-ssl-http.zip config/certs/.
 
+#create instances.yml for certificate creation for service.  Done this way to add the ES_HOST to each cert
+echo -ne \
+"instances:\n"\
+"  - name: es01\n"\
+"    dns:\n"\
+"      - es01\n"\
+"      - localhost\n"\
+"    ip:\n"\
+"      - 127.0.0.1\n"\
+"      - ${ES_HOST}\n"\
+"  - name: es02\n"\
+"    dns:\n"\
+"      - es02\n"\
+"      - localhost\n"\
+"    ip:\n"\
+"      - 127.0.0.1\n"\
+"      - ${ES_HOST}\n"\
+"  - name: es03\n"\
+"    dns:\n"\
+"      - es03\n"\
+"      - localhost\n"\
+"    ip:\n"\
+"      - 127.0.0.1\n"\
+"      - ${ES_HOST}\n"\
+"  - name: kibana\n"\
+"    dns:\n"\
+"      - kibana\n"\
+"      - localhost\n"\
+"    ip:\n"\
+"      - 127.0.0.1\n"\
+"      - ${ES_HOST}\n"\
+"  - name: fleet\n"\
+"    dns:\n"\
+"      - fleet\n"\
+"      - localhost\n"\
+"    ip:\n"\
+"      - 127.0.0.1\n"\
+"      - ${ES_HOST}\n"\
+"  - name: filebeat\n"\
+"    dns:\n"\
+"      - filebeat\n"\
+"      - localhost\n"\
+"    ip:\n"\
+"      - 127.0.0.1\n"\
+"      - ${ES_HOST}\n"\
+"  - name: arkime\n"\
+"    dns:\n"\
+"      - arkime\n"\
+"      - localhost\n"\
+"    ip:\n"\
+"      - 127.0.0.1\n"\
+"      - ${ES_HOST}\n"\
+> /setup/instances.yml
+
 echo "Creating Service Certificates"
 bin/elasticsearch-certutil cert --silent --pem -out config/certs/certs.zip --in /setup/instances.yml --ca-cert config/certs/ca/ca.crt --ca-key config/certs/ca/ca.key
 unzip config/certs/certs.zip -d config/certs
