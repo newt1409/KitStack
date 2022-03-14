@@ -17,3 +17,9 @@ And to fully hack the matrix, tear it down and back up again and your Neo...some
 
       docker-compose down
       docker-compose up -d
+      
+     
+Common Errors:
+      - Couldnt find the env file: setup/fleet.token
+     
+      touch setup/fleet.token
