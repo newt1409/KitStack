@@ -20,6 +20,7 @@ And to fully hack the matrix, tear it down and back up again and your Neo...some
       
      
 Common Errors:
-      - Couldnt find the env file: setup/fleet.token
+
+Couldnt find the env file: setup/fleet.token
      
       touch setup/fleet.token
