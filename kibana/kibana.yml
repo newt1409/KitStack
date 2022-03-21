@@ -6,7 +6,9 @@ elasticsearch.password: password
 monitoring.ui.container.elasticsearch.enabled: true
 
 xpack.security.enabled: true
-xpack.encryptedSavedObjects.encryptionKey: 'fhjskloppd678ehkdfdlliverpoolfcr'
+xpack.encryptedSavedObjects.encryptionKey: "7c547a44cd35e7aba5134481c43f4850"
+xpack.reporting.encryptionKey: "8302c2e5acf54a416082d4bd4a84a444"
+xpack.security.encryptionKey: "004ff384a980ef34874a08981127d8d4"
 elasticsearch.ssl.certificateAuthorities: [ "/usr/share/kibana/config/certificates/elasticsearch-ca.pem" ]
 server.ssl.certificate: "/usr/share/kibana/config/certificates/kibana-server.crt"
 server.ssl.key: "/usr/share/kibana/config/certificates/kibana-server.key"
