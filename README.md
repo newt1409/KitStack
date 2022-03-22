@@ -13,7 +13,7 @@ HOWEVER it needs kibana to be restarted to incorperate Fleet setup after initial
       docker-compose down
       docker-compose up -d
 
-And to fully hack the matrix, tear it down and back up again and your Neo...some people call it the contra code (up, down, up, down, up, down)
+And to fully hack the matrix, tear it down and back up again and you're Neo...some people call it the contra code (up, down, up, down, left, right, etc)
 
       docker-compose down
       docker-compose up -d
