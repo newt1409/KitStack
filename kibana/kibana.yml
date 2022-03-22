@@ -1,15 +1,15 @@
-server.name: washbucket
+server.name: kibana
 server.host: "0.0.0.0"
-elasticsearch.hosts: [ "https://${ES_HOST}:9200" ]
+#elasticsearch.hosts: [ "https://${ES_HOST}:9200" ]
 elasticsearch.username: kibana_system
-elasticsearch.password: password
+#elasticsearch.password: ${KIBANA_PASSWORD}
 monitoring.ui.container.elasticsearch.enabled: true
 
 xpack.security.enabled: true
-xpack.encryptedSavedObjects.encryptionKey: "7c547a44cd35e7aba5134481c43f4850"
-xpack.reporting.encryptionKey: "8302c2e5acf54a416082d4bd4a84a444"
-xpack.security.encryptionKey: "004ff384a980ef34874a08981127d8d4"
+xpack.encryptedSavedObjects.encryptionKey: 0dadfbef361aa0dc4b35791e0c23dece
+xpack.reporting.encryptionKey: cbcb3013ed4e3d58b24f3eecc6c2bd33
+xpack.security.encryptionKey: 30506957f6ba2f0b872b477db064ded8
 elasticsearch.ssl.certificateAuthorities: [ "/usr/share/kibana/config/certificates/elasticsearch-ca.pem" ]
-server.ssl.certificate: "/usr/share/kibana/config/certificates/kibana-server.crt"
-server.ssl.key: "/usr/share/kibana/config/certificates/kibana-server.key"
+server.ssl.certificate: "/usr/share/kibana/config/certificates/kibana.crt"
+server.ssl.key: "/usr/share/kibana/config/certificates/kibana.key"
 server.ssl.enabled: true

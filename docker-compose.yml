@@ -181,21 +181,19 @@ services:
     image: docker.elastic.co/kibana/kibana:${ES_VERSION}
     container_name: kibana
     volumes:
-      - ./secrets/certs:/usr/share/kibana/config/certs
+      - ./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
+      - ./secrets/certs/kibana:/usr/share/kibana/config/certificates
     ports:
       - ${KIBANA_PORT}:5601
     environment:
-      - SERVERNAME=kibana
-      - ELASTICSEARCH_HOSTS=https://es01:9200
-      - ELASTICSEARCH_USERNAME=kibana_system
+      - ELASTICSEARCH_HOSTS=https://${ES_HOST}:9200
       - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
-      - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=config/certs/ca/ca.crt
     mem_limit: ${MEM_LIMIT}
     healthcheck:
       test:
         [
           "CMD-SHELL",
-          "curl -s -I http://localhost:5601 | grep -q 'HTTP/1.1 302 Found'",
+          "curl -s -I --insecure https://elastic:${ELASTIC_PASSWORD}@localhost:5601 | grep -q 'HTTP/1.1 302 Found'",
         ]
       interval: 10s
       timeout: 10s

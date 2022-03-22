@@ -1,5 +1,5 @@
 echo "Preparing Kibana for Fleet Server Integration"
-until curl -s --cacert config/certs/ca/ca.crt -u "elastic:${ELASTIC_PASSWORD}" -X POST "http://${ES_HOST}:5601/api/fleet/setup" --header 'kbn-xsrf: true' | grep -q "nonFatalErrors"; do sleep 15; done;
+until curl --insecure -s --cacert config/certs/ca/ca.crt -u "elastic:${ELASTIC_PASSWORD}" -X POST "https://${ES_HOST}:5601/api/fleet/setup" --header 'kbn-xsrf: true' | grep -q "nonFatalErrors"; do sleep 15; done;
 echo "Kibana Ready"
 echo "Creating Fleet Service Token"
 rand_key=$(openssl rand -base64 40 | tr -d "=+/" | cut -c1-32)
