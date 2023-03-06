@@ -1,0 +1,96 @@
+[manager]
+type=manager
+host=localhost
+
+[proxy-1]
+type=proxy
+host=localhost
+
+[worker-ens161]
+type=worker
+host=localhost
+# See https://github.com/J-Gras/zeek-af_packet-plugin for plugin installation and further configuration
+interface=af_packet::ens161
+lb_procs=1
+lb_method=custom
+af_packet_fanout_id=0
+af_packet_fanout_mode=AF_Packet::FANOUT_HASH
+af_packet_buffer_size=128*1024*1024
+
+[worker-ens162]
+type=worker
+host=localhost
+# See https://github.com/J-Gras/zeek-af_packet-plugin for plugin installation and further configuration
+interface=af_packet::ens162
+lb_procs=1
+lb_method=custom
+af_packet_fanout_id=1
+af_packet_fanout_mode=AF_Packet::FANOUT_HASH
+af_packet_buffer_size=128*1024*1024
+
+[worker-ens192]
+type=worker
+host=localhost
+# See https://github.com/J-Gras/zeek-af_packet-plugin for plugin installation and further configuration
+interface=af_packet::ens192
+lb_procs=1
+lb_method=custom
+af_packet_fanout_id=2
+af_packet_fanout_mode=AF_Packet::FANOUT_HASH
+af_packet_buffer_size=128*1024*1024
+
+[worker-ens193]
+type=worker
+host=localhost
+# See https://github.com/J-Gras/zeek-af_packet-plugin for plugin installation and further configuration
+interface=af_packet::ens193
+lb_procs=1
+lb_method=custom
+af_packet_fanout_id=3
+af_packet_fanout_mode=AF_Packet::FANOUT_HASH
+af_packet_buffer_size=128*1024*1024
+
+[worker-ens224]
+type=worker
+host=localhost
+# See https://github.com/J-Gras/zeek-af_packet-plugin for plugin installation and further configuration
+interface=af_packet::ens224
+lb_procs=1
+lb_method=custom
+af_packet_fanout_id=4
+af_packet_fanout_mode=AF_Packet::FANOUT_HASH
+af_packet_buffer_size=128*1024*1024
+
+[worker-ens225]
+type=worker
+host=localhost
+# See https://github.com/J-Gras/zeek-af_packet-plugin for plugin installation and further configuration
+interface=af_packet::ens225
+lb_procs=1
+lb_method=custom
+af_packet_fanout_id=5
+af_packet_fanout_mode=AF_Packet::FANOUT_HASH
+af_packet_buffer_size=128*1024*1024
+
+[worker-ens256]
+type=worker
+host=localhost
+# See https://github.com/J-Gras/zeek-af_packet-plugin for plugin installation and further configuration
+interface=af_packet::ens256
+lb_procs=1
+lb_method=custom
+af_packet_fanout_id=6
+af_packet_fanout_mode=AF_Packet::FANOUT_HASH
+af_packet_buffer_size=128*1024*1024
+
+[worker-ens257]
+type=worker
+host=localhost
+# See https://github.com/J-Gras/zeek-af_packet-plugin for plugin installation and further configuration
+interface=af_packet::ens257
+lb_procs=1
+lb_method=custom
+af_packet_fanout_id=7
+af_packet_fanout_mode=AF_Packet::FANOUT_HASH
+af_packet_buffer_size=128*1024*1024
+
