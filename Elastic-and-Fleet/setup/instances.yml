@@ -1,0 +1,50 @@
+instances:
+  - name: es01
+    dns:
+      - es01
+      - localhost
+    ip:
+      - 127.0.0.1
+      - 10.76.1.196
+  - name: es02
+    dns:
+      - es02
+      - localhost
+    ip:
+      - 127.0.0.1
+      - 10.76.1.196
+  - name: es03
+    dns:
+      - es03
+      - localhost
+    ip:
+      - 127.0.0.1
+      - 10.76.1.196
+  - name: kibana
+    dns:
+      - kibana
+      - localhost
+    ip:
+      - 127.0.0.1
+      - 10.76.1.196
+  - name: fleet
+    dns:
+      - fleet
+      - localhost
+    ip:
+      - 127.0.0.1
+      - 10.76.1.196
+  - name: filebeat
+    dns:
+      - filebeat
+      - localhost
+    ip:
+      - 127.0.0.1
+      - 10.76.1.196
+  - name: arkime
+    dns:
+      - arkime
+      - localhost
+    ip:
+      - 127.0.0.1
+      - 10.76.1.196

@@ -1,0 +1,50 @@
+version: '3.5'
+services:
+
+
+  # This section is for starting arkime
+  arkime:
+    # Arkime image to use.
+    image: arkime:latest
+    # If the image doesn't exist build from this location. "." is the local directory
+    build: ./arkime
+    # What to name the running container
+    container_name: arkime
+    # Used to connect container to the host for collecting off the wire
+    network_mode: host
+    # Ports open host:container to interact with the container
+    ports:
+      # Ports open host:container to interact with the container
+      - 8005:8005
+    # ulimit is the number of open file descriptors per process.
+    ulimits:
+      # memlock option is used to set the maximum amount of locked-in-memory address space as given in kilobytes.
+      memlock:
+        # Soft limit is the limit enforced by kernel.
+        soft: -1
+        # Hard limit is the ceiling for the resource value for unprivilged processess
+        ## which can raise its soft limit only to this value.
+        hard: -1
+    # Shares between the host system and the container for "ease of editing"/"persistence of data"
+    volumes:
+      # Mounts host:container volume to allow access/persistence to files running in the container
+      - ./arkime/logs:/opt/arkime/logs/:Z # log files related to arkime
+      - ./arkime/pcap:/opt/arkime/pcap/:ro # pcap folder for ingesting new pcap
+      - ./arkime/raw:/opt/arkime/raw/:rw # pcap folder for processed pcap - stored as sessions2 data
+      - ./arkime/config/config.ini:/opt/arkime/etc/config.ini:ro # Config used for arkime settings
+      - ./suricata/logs:/opt/arkime/etc/suricata:z # Used to share alerts from suricata with arkime.
+      - ./arkime/tags:/opt/arkime/tags/:Z # Used to store WISE tag files.
+      - ./arkime/wise/wiseService.ini:/opt/arkime/etc/wiseService.ini:ro # Used to change the wise config file.
+      ## 1 = leave alone, init if anything else.
+    # Add container capabilities - These may not be needed, but if use cases expand they may be.
+    ## They are used on our kit's config and have been carried over.
+    cap_add:
+      - IPC_LOCK # Allows to lock shared memory segments and mlock/mlockall calls.
+      - NET_RAW # Allow use of RAW and PACKET sockets.
+      - NET_ADMIN # Allows interacting with network interface. ie - promiscuous mode.
+      - SYS_NICE # Allows the container to raise process nice values, set real-time scheduling policies, set CPU affinity, and other operations.
+    environment:
+      - INIT=FALSE # Initialize Arkime db as start? Needs to be done on first startup regardless.
+      - CAPTURE=TRUE # Start Arkime-capture to pull off the wire and store as pcap.
+      - INTERFACE="ens33;ens160;ens192;ens224"
+

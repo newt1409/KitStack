@@ -1,0 +1,2 @@
+@daily       /bin/sh /usr/local/bin/suricatactl filestore prune --age 7d
+*/5 * * * * /usr/sbin/logrotate /etc/logrotate.d/suricata

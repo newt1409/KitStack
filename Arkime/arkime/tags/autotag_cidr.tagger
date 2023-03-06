@@ -1,0 +1,8 @@
+# CIDR/Subnets
+192.168.57.0/24;tags=Servers
+192.168.30.0/24;tags=Voenna_Informaciq
+192.168.34.0/24;tags=Komandvane_Kipiko
+192.168.50.0/24;tags=SKS
+192.168.70.0/24;tags=VSS
+192.168.33.0/24;tags=Cyber_Coalition_Test
+192.168.71.0/24;tags=Admin

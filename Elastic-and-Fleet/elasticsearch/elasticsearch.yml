@@ -1,0 +1,24 @@
+cluster.name: "washbucket"
+network.host: 0.0.0.0
+cluster.routing.allocation.disk.watermark.low: 90%
+cluster.routing.allocation.disk.watermark.high: 95%
+cluster.routing.allocation.disk.watermark.flood_stage: 97%
+action.search.shard_count.limit: 100000
+thread_pool.write.queue_size: 2000
+cluster.routing.allocation.cluster_concurrent_rebalance: 10
+cluster.routing.allocation.node_concurrent_recoveries: 5
+cluster.routing.allocation.node_initial_primaries_recoveries: 5
+indices.recovery.max_bytes_per_sec: "400mb"
+#logger.action.level = info
+
+# Elastic Basic Security Settings
+xpack.security.enabled: true
+xpack.security.authc.api_key.enabled: true
+xpack.security.transport.ssl.enabled: true
+xpack.security.transport.ssl.verification_mode: certificate 
+xpack.security.transport.ssl.keystore.path: /usr/share/elasticsearch/config/certificates/elastic-certificates.p12 
+xpack.security.transport.ssl.truststore.path: /usr/share/elasticsearch/config/certificates/elastic-certificates.p12
+
+# Elasticsearch Encrypted HTTP comms:
+xpack.security.http.ssl.enabled: true
+xpack.security.http.ssl.keystore.path: /usr/share/elasticsearch/config/certificates/http.p12

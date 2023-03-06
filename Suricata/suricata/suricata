@@ -1,0 +1,14 @@
+/var/log/suricata/eve.json
+{
+  su root root
+  notifempty
+  maxsize 10G
+  create
+  hourly
+  rotate 4
+  nocompress
+  sharedscripts
+  postrotate
+    /bin/kill -HUP `cat /var/run/suricata.pid 2>/dev/null` 2>/dev/null || true
+  endscript
+}

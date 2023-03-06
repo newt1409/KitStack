@@ -1,0 +1,19 @@
+version: '3.5'
+services:
+
+# Suricata service
+  suricata:
+    build: ./suricata
+    container_name: suricata
+    image: "suricata:6.0.4"
+    restart: always
+    #cpu: "0.5"
+    volumes:
+      #- ./suricata/rules:/etc/suricata/rules:z # Rules files.
+      #- ./suricata/etc/suricata.yaml:/etc/suricata/suricata.yaml:Z # Suricata.yaml to edit config
+      - ./suricata/logs/:/var/log/suricata:z # suricata logs for alerts and debug
+    network_mode: "host"
+    cap_add:
+      - NET_ADMIN
+      - SYS_NICE
+      - NET_RAW

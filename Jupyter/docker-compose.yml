@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+    jupyter:
+        container_name: jupyter_notebook
+        image: "jupyter/datascience-notebook:latest"
+        restart: unless-stopped
+        ports:
+            - "8888:8888"
+        volumes:
+                #- "/home/assessor/Documents/jupyter:/home/jovyan/work"
+            - "./data:/home/jovyan/work"
+        environment:
+            - "JUPYTER_ENABLE_LAB=yes"
+        command: "start-notebook.sh --NotebookApp.token='password'"

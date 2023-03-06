@@ -1,0 +1,17 @@
+Arkime/arkime/icdm/icdm_check
+Arkime/arkime/raw/*
+Jupyter/jupyter.tar
+Jupyter/data/Enterprise/.gitignore
+Jupyter/data/*
+LandingPage/heimdallsun.tar
+LandingPage/landing.zip
+Redmine/mysql-data/*
+Redmine/redmine-data/*
+Suricata/suricata/icdm/icdm_check
+Suricata/suricata/logs/*
+Suricata/suricata/rules/emerging-all.rules
+Suricata/suricata/rules/misp_admin.rules
+Elastic-and-Fleet/esdata/*
+LandingPage/config/log/*
+Zeek/zeek/logs/*
+Zeek/zeek/spool/*

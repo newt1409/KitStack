@@ -1,0 +1,23 @@
+version: '2.3'
+
+services:
+
+# Suricata service
+  suricata:
+    build: .
+    container_name: suricata
+    restart: always
+    environment:
+    # For ET Pro ruleset replace "OPEN" with your OINKCODE
+      - OINKCODE=2b9c944a22f79d077ae8907aace2cbb4afc31e0f
+    volumes:
+      - ./rules:/etc/suricata/rules:z # Rules files.
+      - ./etc/suricata.yaml:/etc/suricata/suricata.yaml:Z # Suricata.yaml to edit config
+      - ./logs/:/var/log/suricata:z # suricata logs for alerts and debug    
+    network_mode: "host"
+    cap_add:
+      - NET_ADMIN
+      - SYS_NICE
+      - NET_RAW
+    image: "dtagdevsec/suricata:2006"
+

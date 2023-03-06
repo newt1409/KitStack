@@ -1,0 +1,51 @@
+version: '3.5'
+services:
+
+
+  # This section is for starting arkime
+  wise:
+    container_name: arkime_wise
+    image: arkime:3.0.0
+    restart: always
+    network_mode: host
+    command: "/bin/bash -c 'cd /opt/arkime/wiseService; geoipupdate; /opt/arkime/bin/node wiseService.js --insecure -c /opt/arkime/etc/wiseService.ini;'"
+    privileged: true
+    volumes:
+    - "./arkime/configs/wiseService.ini:/opt/arkime/etc/wiseService.ini"
+    - "./arkime/configs/config.ini:/opt/arkime/etc/config.ini"
+    - "./arkime/tags/:/opt/arkime/etc/"
+    - "./suricata/logs/eve.json:/opt/arkime/suricata/eve.json"
+
+  arkimecapture:
+    container_name: arkime_capture
+    image: arkime:3.0.0
+    build: ./arkime
+    depends_on:
+      - wise
+    command: "/bin/bash -c 'cd /opt/arkime; /opt/arkime/bin/capture --insecure -c /opt/arkime/etc/config.ini -n FW --debug;'"
+    network_mode: host
+    privileged: true
+    cap_add:
+      - IPC_LOCK
+      - NET_ADMIN
+      - NET_RAW
+      - SYS_NICE
+    volumes:
+      - "./arkime/configs/config.ini:/opt/arkime/etc/config.ini"
+      - "./suricata/logs/eve.json:/opt/arkime/suricata/eve.json"
+      - "./arkime/raw:/opt/arkime/raw" # Need permissions to read/write 
+      - "./arkime/rules/rules.yml:/opt/arkime/rules/rules.yml"
+
+  arkimeviewer:
+    container_name: arkime_viewer
+    image: arkime:3.0.0
+    network_mode: host
+    depends_on:
+      - arkimecapture
+    command: "/bin/bash -c 'cd /opt/arkime/viewer; /opt/arkime/bin/node viewer.js --insecure -c /opt/arkime/etc/config.ini'"
+    privileged: true
+    volumes:
+      - "./arkime/configs/config.ini:/opt/arkime/etc/config.ini"
+      - "./suricata/logs/eve.json:/opt/arkime/suricata/eve.json"
+      - "./arkime/raw:/opt/arkime/raw" # Need permissions to read/write 
+

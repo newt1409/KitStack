@@ -1,0 +1,19 @@
+alert tcp any any -> any 445 (msg:"GPL NETBIOS SMB-DS C$ unicode share access"; flow:established,to_server; content:"|00|"; depth:1; content:"|FF|SMBu"; within:5; distance:3; byte_test:1,&,128,6,relative; byte_jump:2,34,little,relative; content:"C|00 24 00 00 00|"; distance:2; nocase; content:!"I|00|P|00|C|00 24 00 00 00|"; within:10; distance:-10; nocase; classtype:protocol-command-decode; sid:2; rev:11; metadata:created_at 2010_09_23, updated_at 2010_09_23;)
+
+alert tcp any any -> any 139 (msg:"GPL NETBIOS SMB ADMIN$ unicode share access"; flow:established,to_server; content:"|00|"; depth:1; content:"|FF|SMBu"; within:5; distance:3; byte_test:1,&,128,6,relative; byte_jump:2,34,little,relative; content:"A|00|D|00|M|00|I|00|N|00 24 00 00 00|"; distance:2; nocase; classtype:protocol-command-decode; sid:3; rev:9; metadata:created_at 2010_09_23, updated_at 2010_09_23;)
+
+alert tcp any any -> any 139 (msg:"GPL NETBIOS SMB C$ unicode share access"; flow:established,to_server; content:"|00|"; depth:1; content:"|FF|SMBu"; within:5; distance:3; byte_test:1,&,128,6,relative; byte_jump:2,34,little,relative; content:"C|00 24 00 00 00|"; distance:2; nocase; content:!"I|00|P|00|C|00 24 00 00 00|"; within:10; distance:-10; nocase; classtype:protocol-command-decode; sid:4; rev:12; metadata:created_at 2010_09_23, updated_at 2010_09_23;)
+
+alert tcp any any -> any 139 (msg:"GPL NETBIOS SMB D$ unicode share access"; flow:established,to_server; content:"|00|"; depth:1; content:"|FF|SMBu"; within:5; distance:3; byte_test:1,&,128,6,relative; byte_jump:2,34,little,relative; content:"D|00 24 00 00 00|"; distance:2; nocase; classtype:protocol-command-decode; sid:5; rev:9; metadata:created_at 2010_09_23, updated_at 2010_09_23;)
+
+alert tcp any any -> any 445 (msg:"GPL NETBIOS SMB-DS ADMIN$ share access"; flow:established,to_server; content:"|00|"; depth:1; content:"|FF|SMBu"; within:5; distance:3; byte_test:1,!&,128,6,relative; byte_jump:2,34,little,relative; content:"ADMIN|24 00|"; distance:2; nocase; classtype:protocol-command-decode; sid:6; rev:9; metadata:created_at 2010_09_23, updated_at 2010_09_23;)
+
+alert tcp any any -> any 445 (msg:"GPL NETBIOS SMB-DS ADMIN$ unicode share access"; flow:established,to_server; content:"|00|"; depth:1; content:"|FF|SMBu"; within:5; distance:3; byte_test:1,&,128,6,relative; byte_jump:2,34,little,relative; content:"A|00|D|00|M|00|I|00|N|00 24 00 00 00|"; distance:2; nocase; classtype:protocol-command-decode; sid:7; rev:9; metadata:created_at 2010_09_23, updated_at 2010_09_23;)
+
+alert tcp any any -> any 445 (msg:"GPL NETBIOS SMB-DS C$ share access"; flow:established,to_server; content:"|00|"; depth:1; content:"|FF|SMBu"; within:5; distance:3; byte_test:1,!&,128,6,relative; byte_jump:2,34,little,relative; content:"C|24 00|"; distance:2; nocase; content:!"IPC|24 00|"; within:5; distance:-5; nocase; classtype:protocol-command-decode; sid:8; rev:12; metadata:created_at 2010_09_23, updated_at 2010_09_23;)
+
+#alert smb any any -> any any (file_data; content:"%PDF-1.5"; startswith; sid:9;)
+
+alert tcp any any -> any any (msg:"C$"; content:"|5c 5c 64 63 5c 63 24|"; sid:10;)
+alert tcp any any -> any any (msg: "IPC$"; content:"|5c 49 50 43 24|"; sid:11;)
+alert tcp any any -> any any (smb.share; content:"|5c|smb2"; sid:12;)
