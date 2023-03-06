@@ -273,7 +273,7 @@ services:
       ES_HOST: ${ES_HOST}
     volumes:
         - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:Z
-        - /opt/zeek/spool/manager/:/pcap:ro
+        - ../Zeek/zeek/spool/manager/:/pcap:ro
         - ../Suricata/suricata/logs:/suricata:Z
         - ./secrets/certs:/usr/share/filebeat/config/certs
     command: -e
