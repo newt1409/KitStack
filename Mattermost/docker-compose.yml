@@ -3,7 +3,7 @@ version: "3.7"
 services:
   mattermost.app:
     image: mattermost/mattermost-enterprise-edition
-    build: ./mattermost
+    #build: ./mattermost
     container_name: mattermost.app
     hostname: mattermost.app
     environment:
