@@ -44,8 +44,8 @@ RUN chmod 0644 /etc/logrotate.d/suricata & \
     mknod /var/log/suricata/eve.json p
 
 # Copy & make executable icdm shell script
-COPY icdm/icdm_check /usr/bin/icdm_check
-RUN chmod +x /usr/bin/icdm_check
+#COPY icdm/icdm_check /usr/bin/icdm_check
+#RUN chmod +x /usr/bin/icdm_check
 
 # Set Working Directory
 WORKDIR /etc/suricata
