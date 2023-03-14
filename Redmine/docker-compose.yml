@@ -1,6 +1,6 @@
 version: '2'
 networks:
-  bridge:
+  redmine:
     driver: bridge
 services:
   redmine:
@@ -13,12 +13,12 @@ services:
     volumes:
         - ./redmine-data:/usr/src/redmine/files
     environment:
-      - REDMINE_DB_USERNAME=root
+      #- REDMINE_DB_USERNAME=root
       - REDMINE_DB_PASSWORD=password
       - REDMINE_DB_MYSQL=mysql
-      - DB_HOST=mysql
+      #- DB_HOST=mysql
     networks:
-      - bridge
+      - redmine
   mysql:
     image: "mysql:5.7"
     container_name: redmine-mysql
@@ -26,7 +26,9 @@ services:
       - ./mysql-data:/var/lib/mysql:rw
     environment:
       - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=password
+      #- MYSQL_USER=root
+      #- MYSQL_PASSWORD=password
+      - MYSQL_DATABASE=redmine
+      
     networks:
-      - bridge
+      - redmine

@@ -15,8 +15,3 @@ Elastic-and-Fleet/esdata/*
 LandingPage/config/log/*
 Zeek/zeek/logs/*
 Zeek/zeek/spool/*
-Elastic-and-Fleet/setup/fleet.token
-
-Arkime/arkime/logs/capture.log
-Arkime/arkime/logs/viewer.log
-Arkime/arkime/logs/config.tmp
