@@ -54,4 +54,5 @@ WORKDIR /etc/suricata
 RUN chmod 0644 /var/spool/cron/crontabs/root && crontab /var/spool/cron/crontabs/root
 
 #CMD ["/bin/bash"]
-CMD suricata -v -i ens161 -i ens162 -i ens192 -i ens193 -i ens224 -i ens225 -i ens256 -i ens257
+
+CMD suricata -v -i ens161 -i ens192 -i ens193 -i ens224 -i ens225 -i ens256 -i ens257

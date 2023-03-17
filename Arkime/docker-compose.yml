@@ -31,7 +31,7 @@ services:
       # Mounts host:container volume to allow access/persistence to files running in the container
       - ./arkime/logs:/opt/arkime/logs/:Z # log files related to arkime
       - ./arkime/pcap:/opt/arkime/pcap/:ro # pcap folder for ingesting new pcap
-      - ./arkime/raw:/opt/arkime/raw/:Z # pcap folder for processed pcap - stored as sessions2 data
+      - ./arkime/raw:/opt/arkime/raw/:rw # pcap folder for processed pcap - stored as sessions2 data
       - ./arkime/config/config.ini:/opt/arkime/etc/config.ini:ro # Config used for arkime settings
       - ../Suricata/suricata/logs:/opt/arkime/etc/suricata:z # Used to share alerts from suricata with arkime.
       - ./arkime/tags:/opt/arkime/tags/:Z # Used to store WISE tag files.

@@ -9,12 +9,13 @@ cat config.tmp > /opt/arkime/etc/config.ini
 
 echo "Checking for database initialization"
 if [ -f /opt/arkime/etc/db_version ]; then
-	verFound=$(grep -c "DB Version" /opt/arkime/etc/db_version )
-	if [ $verFound == 0 ]
+	verNull=$(grep -c "\-1" /opt/arkime/etc/db_version )
+	#verFound=$(grep -c "DB Version" /opt/arkime/etc/db_version )
+	if [ $verNull == 1 ]
 	then
 		echo INIT | /opt/arkime/db/db.pl --insecure --esuser $ELASTIC_USERNAME:$ELASTIC_PASSWORD https://localhost:9200 init
-		/opt/arkime/bin/arkime_add_user.sh admin "Admin User" password --admin
 		/opt/arkime/db/db.pl --insecure --esuser $ELASTIC_USERNAME:$ELASTIC_PASSWORD https://localhost:9200 info | grep -i 'db version' > /opt/arkime/etc/db_version
+		/opt/arkime/bin/arkime_add_user.sh --insecure admin "Admin User" password --admin
 	else
 		echo "Checking for version changes"
 		# possible update
