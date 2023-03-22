@@ -36,11 +36,14 @@ COPY wise/wiseService.ini /opt/arkime/etc/wiseService.ini
 # Copy arkime's config file
 COPY config/config.ini /opt/arkime/etc/config.ini
 
-# Copy & make executable icdm shell script
-COPY icdm/icdm_check /usr/bin/icdm_check
+# manage version changes on init and restart
+RUN touch /opt/arkime/etc/db_version
+
+# Copy & make executable script
 COPY entrypoint.sh /usr/bin/entrypoint
-RUN chmod +x /usr/bin/icdm_check /usr/bin/entrypoint
+RUN chmod +x /usr/bin/entrypoint 
 
 # Set Working Directory
-WORKDIR /opt/arkime/viewer
+WORKDIR /opt/arkime
 ENTRYPOINT ["/usr/bin/entrypoint"]
+

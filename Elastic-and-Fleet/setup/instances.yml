@@ -5,46 +5,46 @@ instances:
       - localhost
     ip:
       - 127.0.0.1
-      - 10.76.1.196
+      - 192.168.0.11
   - name: es02
     dns:
       - es02
       - localhost
     ip:
       - 127.0.0.1
-      - 10.76.1.196
+      - 192.168.0.11
   - name: es03
     dns:
       - es03
       - localhost
     ip:
       - 127.0.0.1
-      - 10.76.1.196
+      - 192.168.0.11
   - name: kibana
     dns:
       - kibana
       - localhost
     ip:
       - 127.0.0.1
-      - 10.76.1.196
+      - 192.168.0.11
   - name: fleet
     dns:
       - fleet
       - localhost
     ip:
       - 127.0.0.1
-      - 10.76.1.196
+      - 192.168.0.11
   - name: filebeat
     dns:
       - filebeat
       - localhost
     ip:
       - 127.0.0.1
-      - 10.76.1.196
+      - 192.168.0.11
   - name: arkime
     dns:
       - arkime
       - localhost
     ip:
       - 127.0.0.1
-      - 10.76.1.196
+      - 192.168.0.11

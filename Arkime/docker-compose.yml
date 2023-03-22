@@ -36,6 +36,7 @@ services:
       - ../Suricata/suricata/logs:/opt/arkime/etc/suricata:z # Used to share alerts from suricata with arkime.
       - ./arkime/tags:/opt/arkime/tags/:Z # Used to store WISE tag files.
       - ./arkime/wise/wiseService.ini:/opt/arkime/etc/wiseService.ini:ro # Used to change the wise config file.
+      - ./arkime/etc/db_version:/opt/arkime/etc/db_version:rw
       ## 1 = leave alone, init if anything else.
     # Add container capabilities - These may not be needed, but if use cases expand they may be.
     ## They are used on our kit's config and have been carried over.
@@ -45,8 +46,9 @@ services:
       - NET_ADMIN # Allows interacting with network interface. ie - promiscuous mode.
       - SYS_NICE # Allows the container to raise process nice values, set real-time scheduling policies, set CPU affinity, and other operations.
     environment:
-      - INIT=${INIT} # Initialize Arkime db as start? Needs to be done on first startup regardless.
-      - CAPTURE=${CAPTURE} # Start Arkime-capture to pull off the wire and store as pcap.
+      #- INIT="TRUE" # Initialize Arkime db as start? Needs to be done on first startup regardless.
+      #- CAPTURE=${CAPTURE} # Start Arkime-capture to pull off the wire and store as pcap.
+      #- ARKIME_VERSION=4.0.1
       - ELASTIC_USERNAME=${ELASTIC_USERNAME}
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - INTERFACE=${INTERFACE}
